@@ -1,52 +1,30 @@
 import { IVideoCard } from "../../view/interfaces";
 
-const VideoCard: React.FC<IVideoCard> = ({ data }) => {
-
-
+const VideoCard: React.FC<IVideoCard> = ({ information }) => {
   return (
-    <div
-    style={{
-      width: 800,
-      backgroundColor: "#dbdbdb",
-      borderColor: "black",
-      display: "flex",
-    }}
-  >
-    <div
-      style={{
-        width: "50%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
-      <h4 style={{ color: "red" }}>{data?.title}</h4>
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden mt-4 w-11/12 md:w-3/5">
       <img
-        style={{ width: "80%", height: "70%" }}
-        src={data?.thumbnail}
-        alt=""
+        src={information?.thumbnail}
+        alt={information?.title}
+        className="w-full h-40 sm:h-64 object-cover object-center"
       />
-    </div>
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
-      <h4>resoluciones disponibles</h4>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        {data?.notes.map((note: string, index: number) => (
-          <button style={{ marginBottom: 7 }} key={`${note} ${index}`}>
-            {note}
-          </button>
-        ))}
+      <div className="p-4">
+        <h2 className="text-xl font-semibold text-gray-800">
+          {information?.title}
+        </h2>
+        <div className="mt-2 flex flex-wrap">
+          {information?.notes.map((option, index) => (
+            <button
+              key={index}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2 mb-2"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-  )
+  );
 };
 
 export default VideoCard;

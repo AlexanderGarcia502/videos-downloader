@@ -1,9 +1,20 @@
-const Loading = () => {
+interface ILoading {
+  className?: string;
+  mt?: string;
+  mb?: string;
+  ml?: string;
+  mr?: string;
+  m?: string;
+}
+
+const Loading = (props: ILoading) => {
+  const { className, mt = "0", mb = "0", ml = "0", mr = "0", m = "0" } = props;
+
   const text = "Loading...";
 
   return (
-    <div className="flex justify-center items-center">
-      <p className="text-white text-4xl font-semibold">
+    <div className={`flex justify-center items-center mt-${mt} mb-${mb} ml-${ml} mr-${mr} m-${m}`}>
+      <p className={`text-white text-4xl font-semibold ${className}`}>
         {text.split("").map((char, index) => (
           <span
             key={index}

@@ -5,57 +5,52 @@ import { IInfoVideo } from "../../interfaces/dataInterface";
 import { Singleton } from "../../utils/patterns/observer/singleton";
 import { ConcreteObserver } from "../../utils/patterns/observer/observer";
 import { NotifyProps } from "../../utils/patterns/interfaces";
-import useVideoData from "../../hooks/useInfo";
+import useVideoData from "../../hooks/useGetInfo";
 
 const MainPage = () => {
-  const singleton = Singleton.getInstance();
-  const services = new Services();
+  // const singleton = Singleton.getInstance();
+  // const services = new Services();
 
-  const [information, setInformation] = useState<IInfoVideo | null>({
-    title:'',
-    thumbnail: '',
-    notes: [],
-  });
+  // const [information, setInformation] = useState<IInfoVideo | null>({
+  //   title:'',
+  //   thumbnail: '',
+  //   notes: [],
+  // });
   // const [url, setUrl] = useState<string>("");
-  const [resolution, setResolution] = useState<string | null>("");
+  // const [resolution, setResolution] = useState<string | null>("");
 
-  const { loading, getVideoInfo } = useVideoData();
+  const { videoInfo, loading, error, fetchVideo } = useVideoData();
 
-  const observer = new ConcreteObserver(({ type, value }: NotifyProps) => {
-    if (type === "res") {
-      return setResolution(value);
-    }
-  });
+  // const observer = new ConcreteObserver(({ type, value }: NotifyProps) => {
+  //   if (type === "res") {
+  //     return setResolution(value);
+  //   }
+  // });
 
-  useEffect(() => {
-    singleton.attach(observer);
+    // useEffect(() => {
+    //   singleton.attach(observer);
 
-    return () => {
-      singleton.detach(observer);
-    };
-  });
+    //   return () => {
+    //     singleton.detach(observer);
+    //   };
+    // });
 
   const onDownload = () => {
     alert("descargando!!!");
   };
 
   const onSearch = async (url: string) => {
-    const videoInfo = await getVideoInfo(url);
-    setInformation(videoInfo);
-    console.log("dataaaa: , result");
+    fetchVideo(url);
   };
-  console.log("la resoulcion es: ", resolution);
   
-  const prueba = information !== null ? Object.keys(information).length : 'no es'
-  console.log('hola: ', prueba)
-
   return (
     <div className="">
       <MainView
+        error={error}
         onDownload={onDownload}
         onSearch={onSearch}
         loading={loading}
-        information={information}
+        information={videoInfo}
       />
     </div>
   );

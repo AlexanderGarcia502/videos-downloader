@@ -3,6 +3,8 @@ import { Singleton } from "../../utils/patterns/observer/singleton";
 import { IMainViewProps } from "./interfaces";
 import VideoCard from "../organisms/videoCard/VideoCard";
 import Loading from "../molecules/Loading";
+import ErrorMessage from "../molecules/ErrorMessage";
+
 // const MainView: React.FC<IMainViewProps> & IChildren = ({
 //   onDownload,
 //   onSearch,
@@ -44,6 +46,7 @@ const MainView: React.FC<IMainViewProps> = ({
   onSearch,
   loading,
   information,
+  error,
 }) => {
   const singleton = Singleton.getInstance();
 
@@ -56,7 +59,6 @@ const MainView: React.FC<IMainViewProps> = ({
     singleton.notify({ type: "url", value: urlField });
     onSearch(urlField);
   };
-
   return (
     <div
       className="flex justify-center items-center flex-col"
@@ -74,7 +76,7 @@ const MainView: React.FC<IMainViewProps> = ({
             fontWeight: "2000",
             color: "#FFFFFF",
           }}
-          className="text-2xl sm:text-3xl md:text-3xl lg:text-5xl mb-3 font-bold font-black"
+          className="text-2xl sm:text-3xl md:text-3xl lg:text-5xl mb-1 sm:mb-5 font-bold font-black"
         >
           Descarga tus videos en HD
         </span>
@@ -98,11 +100,13 @@ const MainView: React.FC<IMainViewProps> = ({
           </button>
         </div>
       </div>
-      <div className="">
-        {information !== null && loading && <Loading />}
-        {information === null && !loading && <h2>No se encontro el video</h2>}
-        {information !== null && loading === false && (
-          <VideoCard data={information} />
+      <div className="flex justify-center">
+        {information === null && loading && <Loading mt="3" />}
+        {information === null && !loading && (
+          <ErrorMessage message={error} className="mt-3" />
+        )}
+        {information !== null && !loading && (
+          <VideoCard information={information} />
         )}
       </div>
     </div>
@@ -110,5 +114,3 @@ const MainView: React.FC<IMainViewProps> = ({
 };
 
 export default MainView;
-
-
