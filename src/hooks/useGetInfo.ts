@@ -2,10 +2,6 @@ import { useState } from "react";
 import { Services } from "../services/services";
 import { IInfoVideo } from "../interfaces/dataInterface";
 
-//loading
-//si hay errror mandar el mensaje de error
-//si hay data que mande la data
-
 const useVideoInfo = () => {
   const services = new Services();
 
@@ -19,7 +15,7 @@ const useVideoInfo = () => {
       const result = await services.getVideoInformation(url);
       setVideoInfo(result);
     } catch (error: any) {
-      console.log('error: ', error.Error)
+      console.log("error: ", error.Error);
       setError(error.message);
     } finally {
       setLoading(false);

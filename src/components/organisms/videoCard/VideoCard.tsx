@@ -1,6 +1,6 @@
 import { IVideoCard } from "../../view/interfaces";
 
-const VideoCard: React.FC<IVideoCard> = ({ information }) => {
+const VideoCard: React.FC<IVideoCard> = ({ information, onDownload }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden mt-4 w-11/12 md:w-3/5">
       <img
@@ -17,6 +17,7 @@ const VideoCard: React.FC<IVideoCard> = ({ information }) => {
             <button
               key={index}
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2 mb-2"
+              onClick={() => onDownload(option)}
             >
               {option}
             </button>

@@ -1,45 +1,8 @@
 import { useState } from "react";
-import { Singleton } from "../../utils/patterns/observer/singleton";
 import { IMainViewProps } from "./interfaces";
 import VideoCard from "../organisms/videoCard/VideoCard";
 import Loading from "../molecules/Loading";
 import ErrorMessage from "../molecules/ErrorMessage";
-
-// const MainView: React.FC<IMainViewProps> & IChildren = ({
-//   onDownload,
-//   onSearch,
-//   children,
-// }) => {
-//   const singleton = Singleton.getInstance();
-
-//   const [urlField, setUrlField] = useState<string>("");
-
-//   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setUrlField(event.target.value.trim());
-//   };
-//   const onSearchVideo = () => {
-
-//     singleton.notify({ type: "url", value: urlField });
-//     onSearch('')
-//   };
-//   return (
-//     <div>
-//       <input
-//         type="text"
-//         name="link"
-//         id=""
-//         value={urlField}
-//         onChange={handleInputChange}
-//       />
-//       <button onClick={onSearchVideo}>Buscar video</button>
-//       {children}
-//     </div>
-//   );
-// };
-
-// MainView.videoCard = VideoCard;
-
-// export default MainView;
 
 const MainView: React.FC<IMainViewProps> = ({
   onDownload,
@@ -48,15 +11,12 @@ const MainView: React.FC<IMainViewProps> = ({
   information,
   error,
 }) => {
-  const singleton = Singleton.getInstance();
-
   const [urlField, setUrlField] = useState<string>("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrlField(event.target.value.trim());
   };
   const onSearchVideo = () => {
-    singleton.notify({ type: "url", value: urlField });
     onSearch(urlField);
   };
   return (
@@ -106,7 +66,7 @@ const MainView: React.FC<IMainViewProps> = ({
           <ErrorMessage message={error} className="mt-3" />
         )}
         {information !== null && !loading && (
-          <VideoCard information={information} />
+          <VideoCard onDownload={onDownload} information={information} />
         )}
       </div>
     </div>
