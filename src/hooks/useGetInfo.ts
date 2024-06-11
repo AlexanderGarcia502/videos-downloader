@@ -9,13 +9,14 @@ const useVideoInfo = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchVideo = async (url: string) => {
+  const fetchVideo = async (network: string, url: string) => {
     try {
       setLoading(true);
-      const result = await services.getVideoInformation(url);
+      setVideoInfo(null);
+      setError(null);
+      const result = await services.getVideoInformation(network, url);
       setVideoInfo(result);
     } catch (error: any) {
-      console.log("error: ", error.Error);
       setError(error.message);
     } finally {
       setLoading(false);

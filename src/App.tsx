@@ -1,11 +1,7 @@
 import MainPage from "./components/page/MainPage";
 
 function App() {
-  return (
-    <div>
-      <MainPage />
-    </div>
-  );
+  return <MainPage />;
 }
 
 export default App;

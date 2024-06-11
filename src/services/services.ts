@@ -1,13 +1,19 @@
 import axios from "../utils/Api";
+import { CancelToken } from "axios";
 
 interface IDownloadVideo {
   link: string;
   resolution: string;
 }
+interface ICancelToken {
+  cancelToken?: CancelToken;
+}
 export class Services {
-  async getVideoInformation(link: string) {
+  async getVideoInformation(network: string, link: string) {
     try {
-      const result: any = await axios.get(`/information_video?link=${link}`);
+      const result: any = await axios.get(
+        `/information_video?network=${network}&link=${link}`
+      );
 
       return result.data.data;
     } catch (error: any) {
@@ -20,14 +26,65 @@ export class Services {
       }
     }
   }
-  async downloadVideo({ link, resolution }: IDownloadVideo) {
+  downloadVideo = async (
+    { link, resolution }: IDownloadVideo,
+    { cancelToken }: ICancelToken
+  ) => {
     try {
-      const result = await axios.post("/download_video", { link, resolution });
+      const response = await axios.post(
+        "http://localhost:4000/api/youtube/download_video",
+        {
+          link,
+          resolution,
+        },
+        {
+          cancelToken,
+        }
+      );
 
-      return result;
+      const data = response.data;
+      if (data.ok) {
+        const a = document.createElement("a");
+        a.href = `http://localhost:4000${data.downloadUrl}`;
+        a.download = "video.mp4";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        console.error("**Error:", data.message);
+      }
     } catch (error: any) {
-      console.log(error);
-      throw new Error(error);
+      throw new Error(error.message);
     }
-  }
+  };
+  downloadMP3 = async (
+    { link }: { link: string },
+    { cancelToken }: ICancelToken
+  ) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/youtube/download_mp3",
+        {
+          link,
+        },
+        {
+          cancelToken,
+        }
+      );
+
+      const data = response.data;
+      if (data.ok) {
+        const a = document.createElement("a");
+        a.href = `http://localhost:4000${data.downloadUrl}`;
+        a.download = "archivo.mp3";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        console.error("**Error:", data.message);
+      }
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  };
 }

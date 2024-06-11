@@ -1,34 +1,19 @@
 import { useState } from "react";
 import { IMainViewProps } from "./interfaces";
-import VideoCard from "../organisms/videoCard/VideoCard";
-import Loading from "../molecules/Loading";
-import ErrorMessage from "../molecules/ErrorMessage";
 
-const MainView: React.FC<IMainViewProps> = ({
-  onDownload,
-  onSearch,
-  loading,
-  information,
-  error,
-}) => {
+const MainView: React.FC<IMainViewProps> = ({ onSearch, children }) => {
   const [urlField, setUrlField] = useState<string>("");
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrlField(event.target.value.trim());
-  };
-  const onSearchVideo = () => {
-    onSearch(urlField);
+    const trimmedValue = event.target.value.trim();
+    if (trimmedValue !== urlField) {
+      setUrlField(trimmedValue);
+      setIsDisabled(false);
+    }
   };
   return (
-    <div
-      className="flex justify-center items-center flex-col"
-      style={{
-        maxWidth: 1200,
-        marginRight: "auto",
-        marginLeft: "auto",
-        height: "100vh",
-      }}
-    >
+    <div className="w-full h-full flex justify-center items-center flex-col overflow-auto">
       <div className="w-full flex justify-center items-center flex-col">
         <span
           style={{
@@ -36,7 +21,7 @@ const MainView: React.FC<IMainViewProps> = ({
             fontWeight: "2000",
             color: "#FFFFFF",
           }}
-          className="text-2xl sm:text-3xl md:text-3xl lg:text-5xl mb-1 sm:mb-5 font-bold font-black"
+          className="text-2xl ml-3 mr-3 mt-4 sm:mt-0 sm:ml-0 sm:mr-0 sm:text-3xl sm:mb-5 md:text-3xl lg:text-5xl mb-1 font-bold font-black text-center"
         >
           Descarga tus videos en HD
         </span>
@@ -53,22 +38,18 @@ const MainView: React.FC<IMainViewProps> = ({
             placeholder="Agregar enlace"
           />
           <button
-            className="bg-purple-500 text-base hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 transform hover:scale-105 hover:shadow-lg ml-3 mt-3 md:mt-0"
-            onClick={onSearchVideo}
+            className="bg-purple-500 text-base hover:bg-purple-600 text-white font-bold py-2 mb-2 px-4 rounded-full shadow-md transition duration-300 transform hover:scale-105 hover:shadow-lg ml-3 mt-3 md:mt-0"
+            disabled={isDisabled}
+            onClick={() => {
+              setIsDisabled(true);
+              onSearch(urlField);
+            }}
           >
             Buscar video
           </button>
         </div>
       </div>
-      <div className="flex justify-center">
-        {information === null && loading && <Loading mt="3" />}
-        {information === null && !loading && (
-          <ErrorMessage message={error} className="mt-3" />
-        )}
-        {information !== null && !loading && (
-          <VideoCard onDownload={onDownload} information={information} />
-        )}
-      </div>
+      <div className="w-full overflow-auto pb-4">{children}</div>
     </div>
   );
 };

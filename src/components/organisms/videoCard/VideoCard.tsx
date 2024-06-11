@@ -2,7 +2,7 @@ import { IVideoCard } from "../../view/interfaces";
 
 const VideoCard: React.FC<IVideoCard> = ({ information, onDownload }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden mt-4 w-11/12 md:w-3/5">
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden mt-4 w-11/12 max-w-full md:max-w-6xl">
       <img
         src={information?.thumbnail}
         alt={information?.title}
@@ -17,11 +17,17 @@ const VideoCard: React.FC<IVideoCard> = ({ information, onDownload }) => {
             <button
               key={index}
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2 mb-2"
-              onClick={() => onDownload(option)}
+              onClick={() => onDownload({ resolution: option, format: "mp4" })}
             >
               {option}
             </button>
           ))}
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mr-2 mb-2"
+            onClick={() => onDownload({ format: "mp3" })}
+          >
+            MP3
+          </button>
         </div>
       </div>
     </div>
