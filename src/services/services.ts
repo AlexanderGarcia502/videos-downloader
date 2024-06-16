@@ -32,7 +32,7 @@ export class Services {
   ) => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/youtube/download_video",
+        "https://videos-downloader-backend.vercel.app/api/youtube/download_video",
         {
           link,
           resolution,
@@ -45,7 +45,7 @@ export class Services {
       const data = response.data;
       if (data.ok) {
         const a = document.createElement("a");
-        a.href = `http://localhost:4000${data.downloadUrl}`;
+        a.href = `https://videos-downloader-backend.vercel.app${data.downloadUrl}`;
         a.download = "video.mp4";
         document.body.appendChild(a);
         a.click();
@@ -63,7 +63,7 @@ export class Services {
   ) => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/youtube/download_mp3",
+        "https://videos-downloader-backend.vercel.app/api/youtube/download_mp3",
         {
           link,
         },
@@ -75,7 +75,7 @@ export class Services {
       const data = response.data;
       if (data.ok) {
         const a = document.createElement("a");
-        a.href = `http://localhost:4000${data.downloadUrl}`;
+        a.href = `https://videos-downloader-backend.vercel.app${data.downloadUrl}`;
         a.download = "archivo.mp3";
         document.body.appendChild(a);
         a.click();
