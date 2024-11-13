@@ -10,6 +10,7 @@ interface ICancelToken {
 }
 export class Services {
   async getVideoInformation(network: string, link: string) {
+    console.log(network, link)
     try {
       const result: any = await axios.get(
         `/information_video?network=${network}&link=${link}`
@@ -32,7 +33,7 @@ export class Services {
   ) => {
     try {
       const response = await axios.post(
-        "https://videos-downloader-backend.vercel.app/api/youtube/download_video",
+        "https://videos-downloader-backend-w4l6.onrender.com/api/youtube/download_video",
         {
           link,
           resolution,
@@ -45,7 +46,7 @@ export class Services {
       const data = response.data;
       if (data.ok) {
         const a = document.createElement("a");
-        a.href = `https://videos-downloader-backend.vercel.app${data.downloadUrl}`;
+        a.href = `https://videos-downloader-backend-w4l6.onrender.com${data.downloadUrl}`;
         a.download = "video.mp4";
         document.body.appendChild(a);
         a.click();
@@ -63,7 +64,7 @@ export class Services {
   ) => {
     try {
       const response = await axios.post(
-        "https://videos-downloader-backend.vercel.app/api/youtube/download_mp3",
+        "https://videos-downloader-backend-w4l6.onrender.com/api/youtube/download_mp3",
         {
           link,
         },
@@ -75,7 +76,7 @@ export class Services {
       const data = response.data;
       if (data.ok) {
         const a = document.createElement("a");
-        a.href = `https://videos-downloader-backend.vercel.app${data.downloadUrl}`;
+        a.href = `https://videos-downloader-backend-w4l6.onrender.com${data.downloadUrl}`;
         a.download = "archivo.mp3";
         document.body.appendChild(a);
         a.click();
