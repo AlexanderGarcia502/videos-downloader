@@ -13,7 +13,7 @@ export class Services {
     console.log(network, link)
     try {
       const result: any = await axios.get(
-        `/information_video?network=${network}&link=${link}`
+        `/information_video?link=${link}`
       );
 
       return result.data.data;
