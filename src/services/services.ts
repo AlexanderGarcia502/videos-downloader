@@ -12,8 +12,10 @@ export class Services {
   async getVideoInformation(network: string, link: string) {
     console.log(network, link)
     try {
+      //`/information_video?link=${link}`
+
       const result: any = await axios.get(
-        `/information_video?link=${link}`
+        "https://videos-downloader-backend-w4l6.onrender.com/api/youtube/information_video?link=" + link.trim()
       );
       console.log('data information: ', result)
       return result.data.data;
