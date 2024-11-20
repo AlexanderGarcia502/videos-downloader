@@ -15,7 +15,7 @@ export class Services {
       const result: any = await axios.get(
         `/information_video?link=${link}`
       );
-
+      console.log('data information: ', result)
       return result.data.data;
     } catch (error: any) {
       console.log("ERROR:: ", error);
