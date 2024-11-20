@@ -10,14 +10,14 @@ interface ICancelToken {
 }
 export class Services {
   async getVideoInformation(network: string, link: string) {
-    console.log(network, link)
+    console.log(network, link);
     try {
-      //`/information_video?link=${link}`
-
-      const result: any = await axios.get(
-        "https://videos-downloader-backend-w4l6.onrender.com/api/youtube/information_video?link=" + link.trim()
+      const result = await axios.get(
+        "https://videos-downloader-backend-w4l6.onrender.com/api/youtube/information_video?link=" +
+          link.trim(),
+        { withCredentials: true } // Asegura que las cookies se envíen con la solicitud
       );
-      console.log('data information: ', result)
+      console.log("data information: ", result);
       return result.data.data;
     } catch (error: any) {
       console.log("ERROR:: ", error);
